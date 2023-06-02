@@ -60,8 +60,19 @@ def questao_5(datapath):
     # transformando em dicionario a series
     return dict(series_estados)
 
-def questao_6():
-    pass
+def questao_6(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    
+    # retirando qualquer sexo diferente de M do dataframe
+    series_estados = df[df.CS_SEXO == "M"]
+
+    # agrupando quantidade de casos por estado
+    series_estados = series_estados.groupby(["SG_UF_NOT"])["ID_AGRAVO"].count()
+
+    series_estados = decodifica_estados(series_estados)
+
+    return dict(series_estados)
 
 def questao_7():
     pass
@@ -75,4 +86,4 @@ def questao_9():
 def questao_10():
     pass
 
-print(questao_5("Raiva_Humana_2021.csv"))
+print(questao_6("Raiva_Humana_2021.csv"))
