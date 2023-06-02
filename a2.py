@@ -29,8 +29,12 @@ def questao_3(datapath):
     return (sexo_mais_frequente, dicionario_sexo)
 
 
-def questao_4():
-    pass
+def questao_4(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    
+    # pegando a média da coluna idade_anos
+    return df["idade_anos"].mean()
 
 def questao_5():
     pass
