@@ -1,8 +1,13 @@
+import pandas as pd
 
-AUTORES = ['Nome Sobrenome', 'Nome Sobrenome']
 
-def questao_1():
-    pass
+AUTORES = ['Daniel de Miranda Almeida', 'Luís Felipe de Abreu Marciano']
+
+def questao_1(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    # retornando quantidade de linhas
+    return len(df.index)
 
 def questao_2():
     pass
