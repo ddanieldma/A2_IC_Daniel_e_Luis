@@ -3,6 +3,17 @@ import pandas as pd
 
 AUTORES = ['Daniel de Miranda Almeida', 'Luís Felipe de Abreu Marciano']
 
+def decodifica_estados(df):
+    
+    # dicionario com as siglas dos estados para decodificação
+    dicionario_estados = {12: 'AC', 27: 'AL', 16: 'AP', 13: 'AM', 29: 'BA', 23: 'CE', 53: 'DF', 32: 'ES', 52: 'GO', 21: 'MA', 51: 'MT', 50: 'MS', 31: 'MG', 15: 'PA', 25: 'PB', 41: 'PR', 26: 'PE', 22: 'PI', 24: 'RN', 43: 'RS', 33: 'RJ', 11: 'RO', 14: 'RR', 42: 'SC', 35: 'SP', 28: 'SE', 17: 'TO'}
+    # mudando os indices da series para as siglas dos estados
+    df.rename(index = dicionario_estados, inplace = True)
+
+    print(df)
+
+    return df
+
 def questao_1(datapath):
     # recebendo database
     df = pd.read_csv(datapath)
@@ -40,13 +51,11 @@ def questao_5(datapath):
     # recebendo database
     df = pd.read_csv(datapath)
     
-    # dicionario com as siglas dos estados para decodificação
-    dicionario_estados = {12: 'AC', 27: 'AL', 16: 'AP', 13: 'AM', 29: 'BA', 23: 'CE', 53: 'DF', 32: 'ES', 52: 'GO', 21: 'MA', 51: 'MT', 50: 'MS', 31: 'MG', 15: 'PA', 25: 'PB', 41: 'PR', 26: 'PE', 22: 'PI', 24: 'RN', 43: 'RS', 33: 'RJ', 11: 'RO', 14: 'RR', 42: 'SC', 35: 'SP', 28: 'SE', 17: 'TO'}
-
     # agrupando quantidade de casos por estado
     series_estados = df.groupby(["SG_UF_NOT"])["ID_AGRAVO"].count()
-    # mudando os indices da series para as siglas dos estados
-    series_estados.rename(index = dicionario_estados, inplace = True)
+    
+    # decodificando estados
+    series_estados = decodifica_estados(series_estados)
 
     # transformando em dicionario a series
     return dict(series_estados)
@@ -65,3 +74,5 @@ def questao_9():
 
 def questao_10():
     pass
+
+print(questao_5("Raiva_Humana_2021.csv"))
