@@ -9,8 +9,13 @@ def questao_1(datapath):
     # retornando quantidade de linhas
     return len(df.index)
 
-def questao_2():
-    pass
+def questao_2(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    # agrupando por muncipio e retornando a coluna ID_AGRAVO, que
+    # como é sempre não nula, pode ser usada para contar o número
+    # de casos por município
+    return df.groupby(["ID_MUNICIP"])["ID_AGRAVO"].count()
 
 def questao_3():
     pass
