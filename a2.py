@@ -36,8 +36,20 @@ def questao_4(datapath):
     # pegando a média da coluna idade_anos
     return df["idade_anos"].mean()
 
-def questao_5():
-    pass
+def questao_5(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    
+    # dicionario com as siglas dos estados para decodificação
+    dicionario_estados = {12: 'AC', 27: 'AL', 16: 'AP', 13: 'AM', 29: 'BA', 23: 'CE', 53: 'DF', 32: 'ES', 52: 'GO', 21: 'MA', 51: 'MT', 50: 'MS', 31: 'MG', 15: 'PA', 25: 'PB', 41: 'PR', 26: 'PE', 22: 'PI', 24: 'RN', 43: 'RS', 33: 'RJ', 11: 'RO', 14: 'RR', 42: 'SC', 35: 'SP', 28: 'SE', 17: 'TO'}
+
+    # agrupando quantidade de casos por estado
+    series_estados = df.groupby(["SG_UF_NOT"])["ID_AGRAVO"].count()
+    # mudando os indices da series para as siglas dos estados
+    series_estados.rename(index = dicionario_estados, inplace = True)
+
+    # transformando em dicionario a series
+    return dict(series_estados)
 
 def questao_6():
     pass
