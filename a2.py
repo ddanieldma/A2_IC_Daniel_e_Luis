@@ -17,8 +17,16 @@ def questao_2(datapath):
     # de casos por município
     return df.groupby(["ID_MUNICIP"])["ID_AGRAVO"].count()
 
-def questao_3():
-    pass
+def questao_3(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    
+    # retorna uma series que é transformada em dicionario
+    dicionario_sexo = dict(df.groupby(["CS_SEXO"])["ID_AGRAVO"].count())
+    # pega a chave que tem o maior valor em todo o dicionário
+    sexo_mais_frequente = max(dicionario_sexo, key=dicionario_sexo.get)
+    # retornando tupla    
+    return (sexo_mais_frequente, dicionario_sexo)
 
 
 def questao_4():
