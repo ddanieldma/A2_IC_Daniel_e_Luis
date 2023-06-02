@@ -85,5 +85,3 @@ def questao_9():
 
 def questao_10():
     pass
-
-print(questao_6("Raiva_Humana_2021.csv"))
