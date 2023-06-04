@@ -104,13 +104,32 @@ def questao_8(datapath):
     
     df["data_notificacao"] = pd.to_datetime(df["DT_NOTIFIC"])
     df["data_sintomas"] = pd.to_datetime(df["DT_SIN_PRI"])
-    display(df)
-    df["ATRASO_NOT"] = df["data_notificacao"] - df["data_sintomas"]
+    df["ATRASO_NOT"] = (df["data_notificacao"] - df["data_sintomas"]) / np.timedelta64(1, "D")
 
     return df
 
-def questao_9():
-    pass
+def questao_9(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+
+    df["data_notificacao"] = pd.to_datetime(df["DT_NOTIFIC"])
+    df["data_sintomas"] = pd.to_datetime(df["DT_SIN_PRI"])
+    df["ATRASO_NOT"] = (df["data_notificacao"] - df["data_sintomas"]) / np.timedelta64(1, "D")
+
+    df_media = df_datas.groupby(["SG_UF_NOT"])["ATRASO_NOT"].mean()
+    df_desvio = df_datas.groupby(["SG_UF_NOT"])["ATRASO_NOT"].std()
+
+    # decodificando nomes dos estados
+    decodifica_estados(df_media)
+
+    # salvando medias e desvios em listas para colocar em tuplas no dicionário final
+    lista_medias = list(df_media)
+    lista_desvios = list(df_desvio)
+    tupla_medias_desvios = tuple(zip(lista_medias, lista_desvios))
+
+    dicionario_medias_desvios = dict(zip(df_media.index, tupla_medias_desvios))
+
+    return dicionario_medias_desvios
 
 def questao_10():
     pass
