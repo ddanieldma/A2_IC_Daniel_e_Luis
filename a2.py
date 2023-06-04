@@ -116,8 +116,8 @@ def questao_9(datapath):
     df["data_sintomas"] = pd.to_datetime(df["DT_SIN_PRI"])
     df["ATRASO_NOT"] = (df["data_notificacao"] - df["data_sintomas"]) / np.timedelta64(1, "D")
 
-    df_media = df_datas.groupby(["SG_UF_NOT"])["ATRASO_NOT"].mean()
-    df_desvio = df_datas.groupby(["SG_UF_NOT"])["ATRASO_NOT"].std()
+    df_media = df.groupby(["SG_UF_NOT"])["ATRASO_NOT"].mean()
+    df_desvio = df.groupby(["SG_UF_NOT"])["ATRASO_NOT"].std()
 
     # decodificando nomes dos estados
     decodifica_estados(df_media)
@@ -131,5 +131,21 @@ def questao_9(datapath):
 
     return dicionario_medias_desvios
 
-def questao_10():
-    pass
+def questao_10(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    
+    df["data_notificacao"] = pd.to_datetime(df["DT_NOTIFIC"])
+    df["data_sintomas"] = pd.to_datetime(df["DT_SIN_PRI"])
+    df["ATRASO_NOT"] = (df["data_notificacao"] - df["data_sintomas"]) / np.timedelta64(1, "D")
+    
+    # criando dataframe com municipios e a media para cada um
+    df_atraso_municipio = pd.DataFrame(df.groupby(["ID_MUNICIP"])["ATRASO_NOT"].mean())
+
+    # adicionando coluna com o numero de notificacoes no dataframe
+    df_atraso_municipio["n_notificacoes"] = df.groupby(["ID_MUNICIP"])["ID_AGRAVO"].count()
+
+    # fazendo gráfico
+    fig, plot_municipios = plt.subplots()
+    # plotando valores
+    return plot_municipios.scatter(df_atraso_municipio["ATRASO_NOT"], df_atraso_municipio["n_notificacoes"])
