@@ -74,8 +74,29 @@ def questao_6(datapath):
 
     return dict(series_estados)
 
-def questao_7():
-    pass
+def questao_7(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    
+    dicionario_municipios_estados = {'MG': 853, 'SP': 645, 'RS': 497, 'BA': 417, 'PR': 399, 'SC': 295, 'GO': 246, 'PI': 224, 'PB': 223, 'MA': 217, 'PE': 184, 'CE': 184, 'RN': 167, 'PA': 144, 'MT': 141, 'TO': 139, 'AL': 102, 'RJ': 92, 'MS': 79, 'ES': 78, 'SE': 75, 'AM': 62, 'RO': 52, 'AC': 22, 'AP': 16, 'RR': 15}
+
+    # fazendo contagem de número de municipios com casos por estado e transformando em dataframe
+    df_contagem_estados = pd.DataFrame(df.groupby(["SG_UF_NOT"])["ID_MUNICIP"].nunique())
+
+    # decodficando os estados
+    df_contagem_estados = decodifica_estados(df_contagem_estados)
+
+    # retirando distrito federal, pois não é um estado
+    df_contagem_estados.drop("DF", inplace = True)
+
+    # compara o dataframe com o dicionário e adiciona os valores do dicionário em uma colun do dataframe fazendo a correpondência entre o index do dataframe e a chave do dicionário
+    df_contagem_estados["n_municipios"] = [dicionario_municipios_estados.get(index) for index in df_contagem_estados.index]
+
+    # adicionando coluna com  proporção de municipios
+    df_contagem_estados["proporcao_municipios"] = round((df_contagem_estados["ID_MUNICIP"]/df_contagem_estados["n_municipios"] * 100))
+
+    # criando e retornando dicionario
+    return dict(zip(df_contagem_estados.index, df_contagem_estados["proporcao_municipios"]))
 
 def questao_8():
     pass
