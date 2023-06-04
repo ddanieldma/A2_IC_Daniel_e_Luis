@@ -98,8 +98,16 @@ def questao_7(datapath):
     # criando e retornando dicionario
     return dict(zip(df_contagem_estados.index, df_contagem_estados["proporcao_municipios"]))
 
-def questao_8():
-    pass
+def questao_8(datapath):
+    # recebendo database
+    df = pd.read_csv(datapath)
+    
+    df["data_notificacao"] = pd.to_datetime(df["DT_NOTIFIC"])
+    df["data_sintomas"] = pd.to_datetime(df["DT_SIN_PRI"])
+    display(df)
+    df["ATRASO_NOT"] = df["data_notificacao"] - df["data_sintomas"]
+
+    return df
 
 def questao_9():
     pass
