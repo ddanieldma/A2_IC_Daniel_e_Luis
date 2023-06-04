@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 AUTORES = ['Daniel de Miranda Almeida', 'Luís Felipe de Abreu Marciano']
