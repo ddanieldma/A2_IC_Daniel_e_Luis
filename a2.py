@@ -150,4 +150,6 @@ def questao_10(datapath):
     # fazendo gráfico
     fig, plot_municipios = plt.subplots()
     # plotando valores
-    return plot_municipios.scatter(df_atraso_municipio["ATRASO_NOT"], df_atraso_municipio["n_notificacoes"])
+    plot_municipios.scatter(df_atraso_municipio["ATRASO_NOT"], df_atraso_municipio["n_notificacoes"])
+    
+    return df_atraso_municipio["ATRASO_NOT"]
