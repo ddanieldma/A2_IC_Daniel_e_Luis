@@ -12,8 +12,6 @@ def decodifica_estados(df):
     # mudando os indices da series para as siglas dos estados
     df.rename(index = dicionario_estados, inplace = True)
 
-    print(df)
-
     return df
 
 def questao_1(datapath):
